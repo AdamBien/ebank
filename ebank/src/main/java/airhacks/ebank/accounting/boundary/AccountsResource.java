@@ -20,7 +20,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.ResponseBuilder;
 
 @Boundary
 @Path("accounts")
@@ -40,8 +39,7 @@ public class AccountsResource {
         log.log(Level.INFO, "get account " + iban);
         return processor
                 .account(iban)
-                .map(Response::ok)
-                .map(ResponseBuilder::build)
+                .map(Responses::ok)
                 .orElseGet(Responses::noContent);
     }
 
@@ -63,8 +61,7 @@ public class AccountsResource {
         var transaction = Transaction.from(serializedTransaction);
         return processor
                 .processTransaction(iban, transaction)
-                .map(Response::ok)
-                .map(ResponseBuilder::build)
+                .map(Responses::ok)
                 .orElseGet(Responses::noContent);
 
     }
