@@ -15,7 +15,7 @@ public class AccountDelegate {
 
     String iban;
 
-    private Response response;
+    Response response;
 
     public JsonObject initialCreationAndFetch(int balance) {
         var iban = randomIBAN();

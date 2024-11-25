@@ -19,7 +19,6 @@ public class TransactionProcessor {
         return Optional.ofNullable(account);
     }
 
-
     public Optional<Account> processTransaction(String iban, Transaction transaction) {
         return this.account(iban)
                 .map(a -> this.applyTransaction(a, transaction))
@@ -29,29 +28,31 @@ public class TransactionProcessor {
 
     Account applyTransaction(Account account, Transaction transaction) {
         return switch (transaction) {
-            case Transaction.Debit debit -> account.debit(transaction.amount());
-            case Transaction.Deposit deposit-> account.deposit(transaction.amount());
+            case Transaction.Debit debit -> account.debit(debit.amount());
+            case Transaction.Deposit deposit -> account.deposit(deposit.amount());
         };
 
     }
 
     public AccountCreationResult initialCreation(Account account) {
-        if(!this.isValidForCreation(account))
+        if (!this.isValidForCreation(account))
             return new AccountCreationResult.Invalid(account);
-        if(this.exists(account))
+        if (this.exists(account))
             return new AccountCreationResult.AlreadyExists(account);
         this.em.persist(account);
         return new AccountCreationResult.Created(account);
     }
 
-    boolean isValidForCreation(Account account){
-        return account.isBalancePositive() 
-        && (account.balance() < 1000);
+    boolean isValidForCreation(Account account) {
+        return account.isBalancePositive()
+                && (account.balance() < 1000);
     }
 
-    boolean exists(Account account){
+    boolean exists(Account account) {
         var iban = account.iban();
-        return this.account(iban).isPresent();
+        return this
+                .account(iban)
+                .isPresent();
     }
 
 }
