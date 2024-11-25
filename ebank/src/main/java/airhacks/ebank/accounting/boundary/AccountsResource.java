@@ -42,7 +42,7 @@ public class AccountsResource {
                 .account(iban)
                 .map(Response::ok)
                 .map(ResponseBuilder::build)
-                .orElse(Response.noContent().build());
+                .orElseGet(Responses::noContent);
     }
 
     @POST
@@ -65,7 +65,7 @@ public class AccountsResource {
                 .processTransaction(iban, transaction)
                 .map(Response::ok)
                 .map(ResponseBuilder::build)
-                .orElse(Response.noContent().build());
+                .orElseGet(Responses::noContent);
 
     }
 

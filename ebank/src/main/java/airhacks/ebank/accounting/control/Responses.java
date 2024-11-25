@@ -26,4 +26,8 @@ public interface Responses {
                 .entity(invalid)
                 .build();
     }
+
+    static Response noContent() {
+        return Response.noContent().build();
+    }
 }
