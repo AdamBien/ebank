@@ -15,7 +15,7 @@ public class AccountDelegate {
 
     String iban;
 
-    Response response;
+    Response lastResponse;
 
     public JsonObject initialCreationAndFetch(int balance) {
         var iban = randomIBAN();
@@ -23,7 +23,7 @@ public class AccountDelegate {
     }
 
     public JsonObject initialCreationAndFetch(String iban, int balance) {
-        this.response = this.initialCreation(iban, balance);
+        this.lastResponse = this.initialCreation(iban, balance);
         this.iban = iban;
         return this.account();
     }
@@ -46,16 +46,16 @@ public class AccountDelegate {
                 }
                 """
                 .formatted(iban, balance);
-        this.response = this.rut.initialCreation(accountJSON);
-        return this.response;
+        this.lastResponse = this.rut.initialCreation(accountJSON);
+        return this.lastResponse;
     }
 
     public boolean lastResponseWas(int status){
-        return this.response.getStatus() == status;
+        return this.lastResponse.getStatus() == status;
     }
 
     public boolean lastResponseSuccessful(){
-        return isSuccessful(this.response);
+        return isSuccessful(this.lastResponse);
     }
     public boolean lastResponseConflict(){
         return lastResponseWas(409);
@@ -84,7 +84,7 @@ public class AccountDelegate {
                 """
                 .formatted(type, amount);
 
-        this.response = this.rut.processTransaction(this.iban, accountJSON);
+        this.lastResponse = this.rut.processTransaction(this.iban, accountJSON);
     }
 
     static boolean isSuccessful(Response response) {
@@ -92,8 +92,8 @@ public class AccountDelegate {
     }
 
     public JsonObject account() {
-        this.response = this.rut.account(this.iban);
-        return this.response.readEntity(JsonObject.class);
+        this.lastResponse = this.rut.account(this.iban);
+        return this.lastResponse.readEntity(JsonObject.class);
     }
 
     public int balance() {
