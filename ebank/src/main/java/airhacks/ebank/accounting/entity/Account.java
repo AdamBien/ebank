@@ -10,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Account{
+public class Account {
 
     @Id
     @Schema(required = true, example = "2")
@@ -30,7 +30,6 @@ public class Account{
         this.balance = balance;
     }
 
-
     public Account debit(BigDecimal amount) {
         this.balance = this.balance.subtract(amount);
         return this;
@@ -41,14 +40,13 @@ public class Account{
         return this;
     }
 
-
     @JsonbTransient
     @Schema(hidden = true)
-    public boolean isBalancePositive(){
+    public boolean isBalancePositive() {
         return this.balance.intValue() > 0;
     }
 
-    public int balance(){
+    public int balance() {
         return this.balance.intValue();
     }
 
@@ -56,9 +54,15 @@ public class Account{
         return this.iban;
     }
 
+    public static String tableName() {
+        return Account.class
+                .getSimpleName()
+                .toLowerCase();
+    }
+
     @Override
     public String toString() {
         return "Account [iban=" + iban + ", balance=" + balance + "]";
     }
-    
+
 }
