@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.sql.DataSource;
 
-import jakarta.enterprise.context.RequestScoped;
+import static airhacks.ebank.accounting.entity.Account.tableName;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 
-@RequestScoped
+@ApplicationScoped
 public class AccountQuery {
     
     @Inject
@@ -22,15 +22,14 @@ public class AccountQuery {
     @Inject
     Logger logger;
 
+    String sql = """
+        SELECT iban
+        FROM %s
+        """.formatted(tableName());
+
 
     public List<String> asIBANs(){
         var ibans = new ArrayList<String>();
-        
-        var sql = """
-            SELECT iban
-            FROM account
-            """;
-        
         try (var con = this.dataSource.getConnection();
              var stmt = con.prepareStatement(sql);
              var rs = stmt.executeQuery();) {
@@ -42,8 +41,7 @@ public class AccountQuery {
             var error = "Database access error " + e.getMessage();
             logger.log(Level.ERROR, e);
             throw new WebApplicationException(error, 500);
-        }
-        
+        }      
         return ibans;
     }
 }
