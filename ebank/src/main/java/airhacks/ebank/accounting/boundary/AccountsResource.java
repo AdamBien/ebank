@@ -3,6 +3,8 @@ package airhacks.ebank.accounting.boundary;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 
+import org.eclipse.microprofile.metrics.annotation.Timed;
+
 import airhacks.ebank.accounting.Boundary;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
@@ -35,6 +37,7 @@ public class AccountsResource {
 
     @GET
     @Path("{iban}")
+    @Timed
     public Response account(@PathParam("iban") String iban) {
         log.log(Level.INFO, "get account " + iban);
         return processor
