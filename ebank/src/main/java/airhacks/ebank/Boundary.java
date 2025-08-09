@@ -1,4 +1,4 @@
-package airhacks.ebank.accounting;
+package airhacks.ebank;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
