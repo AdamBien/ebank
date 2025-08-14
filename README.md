@@ -10,6 +10,13 @@ The application follows the Boundary-Control-Entity (BCE) pattern to maintain cl
 ## Development Setup
 
 ### PostgreSQL Database
+
+Use the provided script for quick database setup:
+```bash
+./runDB.sh
+```
+
+Or manually:
 ```bash
 docker pull postgres
 docker run --rm --name ebank-postgres -e POSTGRES_USER=ebank -e POSTGRES_DB=ebankdb -e POSTGRES_PASSWORD=ebanksecret -p 5432:5432 -d postgres
