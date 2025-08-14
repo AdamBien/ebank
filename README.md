@@ -1,23 +1,37 @@
 # ebank
 
-CRUD with Quarkus / JPA / PostgreSQL 
+A banking API implemented with MicroProfile, powered with Quarkus, demonstrating Java 21+ features. The application provides account management and transaction processing capabilities with a focus on simplicity, observability, and testability.
 
-# PostgreSQL Installation and Start
- 
-1. `docker pull postgres`
-2. `docker run --rm --name ebank-postgres -e POSTGRES_USER=ebank -e POSGRES_DB=ebankdb -e POSTGRES_PASSWORD=ebanksecret -p 5432:5432 -d postgres`
 
-# ebank backend start
+## Architecture Philosophy
 
-from `ebank`:
+The application follows the Boundary-Control-Entity (BCE) pattern to maintain clear separation of concerns. 
 
-`mvn quarkus:dev`
+## Development Setup
 
-# system test exection
+### PostgreSQL Database
+```bash
+docker pull postgres
+docker run --rm --name ebank-postgres -e POSTGRES_USER=ebank -e POSTGRES_DB=ebankdb -e POSTGRES_PASSWORD=ebanksecret -p 5432:5432 -d postgres
+```
 
-from `ebank-st`:
-optional / on demand: 
-[`mvn clean compile test-compile`]
+### Application Start
+```bash
+cd ebank
+mvn quarkus:dev
+```
 
-test execution:
-`mvn failsafe:integration-test`
+### System Testing
+```bash
+cd ebank-st
+mvn failsafe:integration-test
+```
+
+## Technology Stack
+
+- **Quarkus**: Supersonic subatomic Java framework optimized for cloud deployments
+- **PostgreSQL**: Popular relational database for transaction consistency
+- **Jakarta Persistence (JPA)**: Standard ORM for domain object mapping
+- **Jakarta REST**: RESTful web services following industry standards
+- **MicroProfile Health**: Production-ready health check endpoints
+- **MicroProfile Metrics**: Application performance monitoring
