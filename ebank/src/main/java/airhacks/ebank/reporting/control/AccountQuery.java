@@ -1,7 +1,7 @@
 package airhacks.ebank.reporting.control;
 
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
+import static airhacks.ebank.accounting.entity.Account.tableName;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import airhacks.ebank.logging.control.EBLog;
-
-import static airhacks.ebank.accounting.entity.Account.tableName;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
