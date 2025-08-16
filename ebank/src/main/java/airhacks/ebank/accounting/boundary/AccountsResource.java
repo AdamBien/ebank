@@ -1,18 +1,16 @@
 package airhacks.ebank.accounting.boundary;
 
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
+import airhacks.ebank.Boundary;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
-import airhacks.ebank.Boundary;
 import airhacks.ebank.accounting.control.Responses;
 import airhacks.ebank.accounting.control.TransactionProcessor;
 import airhacks.ebank.accounting.entity.Account;
 import airhacks.ebank.accounting.entity.Transaction;
+import airhacks.ebank.logging.control.EBLog;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -33,13 +31,13 @@ public class AccountsResource {
     TransactionProcessor processor;
 
     @Inject
-    Logger log;
+    EBLog log;
 
     @GET
     @Path("{iban}")
     @Timed
     public Response account(@PathParam("iban") String iban) {
-        log.log(Level.INFO, "get account " + iban);
+        this.log.info("get account " + iban);
         return processor
                 .account(iban)
                 .map(Responses::ok)
@@ -48,7 +46,7 @@ public class AccountsResource {
 
     @POST
     public Response initialCreation(Account account){
-        log.log(Level.INFO, "initialCreation " + account);
+        this.log.info("initialCreation " + account);
         var result = this.processor.initialCreation(account);
         return switch(result){
             case Created created -> Responses.created(created);
@@ -60,7 +58,7 @@ public class AccountsResource {
     @POST
     @Path("/{iban}/transactions")
     public Response processTransaction(@PathParam("iban") String iban,TransactionCarrier serializedTransaction) {
-        log.log(Level.INFO, "processTransaction " + iban);
+        this.log.info("processTransaction " + iban);
         var transaction = Transaction.from(serializedTransaction);
         return processor
                 .processTransaction(iban, transaction)

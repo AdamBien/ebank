@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import airhacks.ebank.logging.control.EBLog;
+
 import static airhacks.ebank.accounting.entity.Account.tableName;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,7 +22,7 @@ public class AccountQuery {
     DataSource dataSource;
 
     @Inject
-    Logger logger;
+    EBLog log;
 
     String sql = """
         SELECT iban
@@ -39,7 +41,7 @@ public class AccountQuery {
             }
         } catch (SQLException e) {
             var error = "Database access error " + e.getMessage();
-            logger.log(Level.ERROR, e);
+            this.log.error(error,e);
             throw new WebApplicationException(error, 500);
         }      
         return ibans;

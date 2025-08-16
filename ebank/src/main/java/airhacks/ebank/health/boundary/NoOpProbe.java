@@ -1,12 +1,10 @@
 package airhacks.ebank.health.boundary;
 
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
 
+import airhacks.ebank.logging.control.EBLog;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -15,11 +13,11 @@ import jakarta.inject.Inject;
 public class NoOpProbe implements HealthCheck {
 
     @Inject
-    Logger log;
+    EBLog log;
 
     @Override
     public HealthCheckResponse call() {
-        log.log(Level.INFO, "liveness checked");
+        this.log.info("liveness checked");
         return HealthCheckResponse
                 .up("Basic Availability");
     }
