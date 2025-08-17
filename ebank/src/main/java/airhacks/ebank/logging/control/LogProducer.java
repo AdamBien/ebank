@@ -9,6 +9,6 @@ public class LogProducer {
     @Produces
     public EBLog create(InjectionPoint injectionPoint){
         var clazz = injectionPoint.getMember().getDeclaringClass();
-        return new EBLog(System.getLogger(clazz.getSimpleName()));
+        return new EBLog(clazz);
     }
 }

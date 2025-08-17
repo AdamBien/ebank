@@ -9,6 +9,10 @@ import java.lang.System.Logger.Level;
  */
 public record EBLog(Logger systemLogger) {
 
+    public EBLog(Class<?> clazz){
+        this(System.getLogger(clazz.getName()));
+    }
+
     public void info(String message){
         systemLogger.log(Level.INFO, message);
     }
