@@ -5,7 +5,7 @@ A banking API implemented with MicroProfile, powered with Quarkus, demonstrating
 
 ## Architecture Philosophy
 
-The application follows the Boundary-Control-Entity (BCE) pattern to maintain clear separation of concerns. 
+The application follows the [Boundary-Control-Entity (BCE/ECB) pattern](https://bce.design) pattern to maintain clear separation of concerns. 
 
 ## Development Setup
 
