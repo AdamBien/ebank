@@ -1,5 +1,7 @@
 package airhacks.ebank.reporting.boundary;
 
+import java.util.stream.Collectors;
+
 import airhacks.ebank.reporting.control.AccountQuery;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -15,6 +17,9 @@ public class ReportsResource {
     @Inject
     AccountQuery accounts;
 
+    /**
+     * @return ibans as CSV
+     */
     @GET
     @Path("accounts")
     public Response accounts() {
@@ -23,8 +28,11 @@ public class ReportsResource {
             return Response
                     .noContent()
                     .build();
+        var csv = allAccounts
+                .stream()
+                .collect(Collectors.joining(","));
         return Response
-                .ok(allAccounts)
+                .ok(csv)
                 .build();
     }
 }
