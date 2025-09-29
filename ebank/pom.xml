@@ -21,6 +21,14 @@
 
   <dependencies>
       <dependency>
+          <groupId>io.helidon.integrations.langchain4j</groupId>
+          <artifactId>helidon-integrations-langchain4j</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>io.helidon.integrations.langchain4j.providers</groupId>
+          <artifactId>helidon-integrations-langchain4j-providers-open-ai</artifactId>
+      </dependency>
+      <dependency>
           <groupId>org.postgresql</groupId>
           <artifactId>postgresql</artifactId>
       </dependency>
@@ -94,6 +102,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>io.helidon.bundles</groupId>
+                            <artifactId>helidon-bundles-apt</artifactId>
+                            <version>${helidon.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.helidon.integrations.langchain4j</groupId>
+                            <artifactId>helidon-integrations-langchain4j-codegen</artifactId>
+                            <version>${helidon.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>io.smallrye</groupId>
@@ -101,22 +127,6 @@
                 <executions>
                     <execution>
                         <id>make-index</id>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.hibernate.orm.tooling</groupId>
-                <artifactId>hibernate-enhance-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <failOnError>true</failOnError>
-                            <enableLazyInitialization>true</enableLazyInitialization>
-                            <enableDirtyTracking>true</enableDirtyTracking>
-                        </configuration>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
