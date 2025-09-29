@@ -8,12 +8,16 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import io.helidon.integrations.langchain4j.Ai;
+
 import airhacks.ebank.logging.control.EBLog;
+import dev.langchain4j.agent.tool.Tool;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 
 @ApplicationScoped
+@Ai.Tool
 public class AccountQuery {
     
     @Inject
@@ -28,6 +32,7 @@ public class AccountQuery {
         """.formatted(tableName());
 
 
+    @Tool("Returns a list of IBAN numbers of existing accounts.")
     public List<String> asIBANs(){
         var ibans = new ArrayList<String>();
         try (var con = this.dataSource.getConnection();
