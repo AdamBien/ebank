@@ -64,7 +64,5 @@ public class AccountsResource {
                 .processTransaction(iban, transaction)
                 .map(Responses::ok)
                 .orElseGet(Responses::noContent);
-
     }
-
 }

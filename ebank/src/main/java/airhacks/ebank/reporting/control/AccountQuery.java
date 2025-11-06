@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import airhacks.ebank.logging.control.EBLog;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.WebApplicationException;
 
 @ApplicationScoped
@@ -40,7 +41,7 @@ public class AccountQuery {
         } catch (SQLException e) {
             var error = "Database access error " + e.getMessage();
             this.log.error(error,e);
-            throw new WebApplicationException(error, 500);
+            throw new InternalServerErrorException(error);
         }      
         return ibans;
     }
