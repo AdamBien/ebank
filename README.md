@@ -74,6 +74,7 @@ This project demonstrates several Java and architectural conventions:
 ### Persistence & Data Access
 - **JPA Entities**: Simple entities with public fields
 - **EntityManager Usage**: Direct use via `@PersistenceContext`
+- **JDBC for Reporting**: Direct JDBC usage in reporting component for optimized read operations
 - **Optional Pattern**: Consistent use of `Optional` for nullable returns
 - **Factory Methods**: Static factory methods in entities
 
