@@ -2,7 +2,6 @@ package airhacks.ebank.reports.boundary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -12,7 +11,7 @@ import airhacks.ebank.accounting.boundary.AccountDelegate;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
-@QuarkusTest
+@QuarkusTest 
 public class ReportsResourceIT {
     @Inject
     AccountDelegate accountDelegate;

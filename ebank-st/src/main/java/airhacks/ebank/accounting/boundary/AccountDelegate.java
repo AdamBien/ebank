@@ -6,6 +6,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
 import jakarta.ws.rs.core.Response;
+
+/**
+ * Simplifies system test interactions with the accounts REST API by providing
+ * a fluent interface for account operations and maintaining test state.
+ */
 @ApplicationScoped
 public class AccountDelegate {
 
@@ -30,7 +35,6 @@ public class AccountDelegate {
 
     String randomIBAN(){
         return String.valueOf(System.currentTimeMillis());
-
     }
 
     public Response initialCreation(int balance) {
