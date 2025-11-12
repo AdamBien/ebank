@@ -8,13 +8,12 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import airhacks.ebank.Control;
 import airhacks.ebank.logging.control.EBLog;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.InternalServerErrorException;
-import jakarta.ws.rs.WebApplicationException;
 
-@ApplicationScoped
+@Control
 public class AccountQuery {
     
     @Inject
