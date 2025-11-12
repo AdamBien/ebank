@@ -6,6 +6,7 @@ import airhacks.ebank.Boundary;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
+import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.control.Responses;
 import airhacks.ebank.accounting.control.TransactionProcessor;
 import airhacks.ebank.accounting.entity.Account;
@@ -31,6 +32,9 @@ public class AccountsResource {
     TransactionProcessor processor;
 
     @Inject
+    AccountFinder finder;
+
+    @Inject
     EBLog log;
 
     @GET
@@ -38,7 +42,7 @@ public class AccountsResource {
     @Timed
     public Response account(@PathParam("iban") String iban) {
         this.log.info("get account " + iban);
-        return processor
+        return this.finder
                 .account(iban)
                 .map(Responses::ok)
                 .orElseGet(Responses::noContent);
