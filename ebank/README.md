@@ -31,3 +31,17 @@ The application exposes:
 - Health checks: http://localhost:8080/q/health
 - Metrics: http://localhost:8080/q/metrics
 - OpenAPI: http://localhost:8080/q/swagger-ui
+
+## Production Build
+
+Create an optimized production build:
+
+```bash
+mvn clean package
+```
+
+Build a native executable:
+
+```bash
+mvn clean package -Pnative
+```
