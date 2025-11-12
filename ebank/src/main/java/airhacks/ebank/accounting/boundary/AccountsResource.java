@@ -8,10 +8,10 @@ import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.control.Responses;
-import airhacks.ebank.accounting.control.TransactionProcessor;
 import airhacks.ebank.accounting.entity.Account;
-import airhacks.ebank.accounting.entity.Transaction;
 import airhacks.ebank.logging.control.EBLog;
+import airhacks.ebank.transactions.control.TransactionProcessor;
+import airhacks.ebank.transactions.entity.Transaction;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -59,14 +59,4 @@ public class AccountsResource {
         };
     }
 
-    @POST
-    @Path("/{iban}/transactions")
-    public Response processTransaction(@PathParam("iban") String iban,TransactionCarrier serializedTransaction) {
-        this.log.info("processTransaction " + iban);
-        var transaction = Transaction.from(serializedTransaction);
-        return processor
-                .processTransaction(iban, transaction)
-                .map(Responses::ok)
-                .orElseGet(Responses::noContent);
-    }
 }
