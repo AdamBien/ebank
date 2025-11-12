@@ -6,9 +6,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>airhacks</groupId>
   <artifactId>ebank</artifactId>
-  <version>2024</version>
+  <version>2025</version>
   <properties>
-    <compiler-plugin.version>3.13.0</compiler-plugin.version>
+    <compiler-plugin.version>3.14.1</compiler-plugin.version>
     <maven.compiler.release>25</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
