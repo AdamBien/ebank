@@ -3,6 +3,12 @@
 To perform black box tests locally (uses http://localhost:8080 by default):
 
 ```
+mvn verify
+```
+
+or
+
+```
 mvn clean test-compile failsafe:integration-test
 ```
 
