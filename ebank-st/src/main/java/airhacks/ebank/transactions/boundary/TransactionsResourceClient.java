@@ -1,9 +1,8 @@
+package airhacks.ebank.transactions.boundary;
 
-package airhacks.ebank.accounting.boundary;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -11,19 +10,15 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("accounts")
+
+@Path("transactions")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RegisterRestClient(configKey = "ebank_uri")
-public interface AccountsResourceClient {
+public interface TransactionsResourceClient {
 
-    @GET
-    @Path("{iban}")
-    public Response account(@PathParam("iban") String iban);
 
     @POST
-    public Response initialCreation(String account);
-
-
-
+    @Path("/{iban}")
+    public Response processTransaction(@PathParam("iban") String iban,String serializedTransaction);
 }

@@ -2,6 +2,7 @@ package airhacks.ebank.accounting.boundary;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import airhacks.ebank.transactions.boundary.TransactionsResourceClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
@@ -16,7 +17,11 @@ public class AccountDelegate {
 
     @Inject
     @RestClient
-    AccountsResourceClient rut;
+    AccountsResourceClient accounts;
+
+    @Inject
+    @RestClient
+    TransactionsResourceClient transactions;
 
     String iban;
 
@@ -50,7 +55,7 @@ public class AccountDelegate {
                 }
                 """
                 .formatted(iban, balance);
-        this.lastResponse = this.rut.initialCreation(accountJSON);
+        this.lastResponse = this.accounts.initialCreation(accountJSON);
         return this.lastResponse;
     }
 
@@ -88,7 +93,7 @@ public class AccountDelegate {
                 """
                 .formatted(type, amount);
 
-        this.lastResponse = this.rut.processTransaction(this.iban, accountJSON);
+        this.lastResponse = this.transactions.processTransaction(this.iban, accountJSON);
     }
 
     static boolean isSuccessful(Response response) {
@@ -96,7 +101,7 @@ public class AccountDelegate {
     }
 
     public JsonObject account() {
-        this.lastResponse = this.rut.account(this.iban);
+        this.lastResponse = this.accounts.account(this.iban);
         return this.lastResponse.readEntity(JsonObject.class);
     }
 
