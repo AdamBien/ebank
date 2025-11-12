@@ -3,24 +3,23 @@ package airhacks.ebank.accounting.control;
 
 import java.util.Optional;
 
+import airhacks.ebank.Control;
 import airhacks.ebank.accounting.entity.Account;
 import airhacks.ebank.accounting.entity.Transaction;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-@ApplicationScoped
+@Control
 public class TransactionProcessor {
     @PersistenceContext
     EntityManager em;
 
-    public Optional<Account> account(String iban) {
-        var account = em.find(Account.class, iban);
-        return Optional.ofNullable(account);
-    }
+    @Inject
+    AccountFinder finder;
 
     public Optional<Account> processTransaction(String iban, Transaction transaction) {
-        return this.account(iban)
+        return this.finder.account(iban)
                 .map(a -> this.applyTransaction(a, transaction))
                 .map(this.em::merge);
 
@@ -37,7 +36,7 @@ public class TransactionProcessor {
     public AccountCreationResult initialCreation(Account account) {
         if (!this.isValidForCreation(account))
             return new AccountCreationResult.Invalid(account);
-        if (this.exists(account))
+        if (this.finder.exists(account))
             return new AccountCreationResult.AlreadyExists(account);
         this.em.persist(account);
         return new AccountCreationResult.Created(account);
@@ -47,12 +46,4 @@ public class TransactionProcessor {
         return account.isBalancePositive()
                 && (account.balance() < 1000);
     }
-
-    boolean exists(Account account) {
-        var iban = account.iban();
-        return this
-                .account(iban)
-                .isPresent();
-    }
-
 }
