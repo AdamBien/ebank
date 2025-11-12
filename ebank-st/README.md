@@ -1,12 +1,14 @@
 # ebank system tests
 
-System tests validate the entire ebank application's functionality from an end-user perspective, ensuring all components work together correctly in a production-like environment.
+To perform black box tests locally (uses http://localhost:8080 by default):
 
-## Running the Tests
-
-```bash
-mvn clean verify
+```
+mvn clean test-compile failsafe:integration-test
 ```
 
-Tests are executed automatically during the verify phase using the Failsafe plugin. Ensure the application is running before executing system tests.
+To test against a remote environment, set the BASE_URI environment variable:
 
+```
+export BASE_URI=https://deployed.com
+mvn clean test-compile failsafe:integration-test
+```
