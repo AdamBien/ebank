@@ -7,7 +7,7 @@ import airhacks.ebank.accounting.boundary.TransactionCarrier.TransactionType;
 
 
 
-public sealed interface Transaction {
+public sealed interface Transaction permits Transaction.Debit, Transaction.Deposit{
     BigDecimal amount();
     record Debit(BigDecimal amount) implements Transaction {}
     record Deposit(BigDecimal amount) implements Transaction {}
