@@ -13,6 +13,10 @@ import airhacks.ebank.logging.control.EBLog;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.InternalServerErrorException;
 
+/**
+ * Queries account data for reporting purposes.
+ * Provides read-only access to account information without modifying state.
+ */
 @Control
 public class AccountQuery {
     
@@ -28,6 +32,12 @@ public class AccountQuery {
         """.formatted(tableName());
 
 
+    /**
+     * Retrieves all account identifiers for reporting and listing purposes.
+     *
+     * @return list of IBANs from all accounts in the system
+     * @throws InternalServerErrorException if database access fails
+     */
     public List<String> asIBANs(){
         var ibans = new ArrayList<String>();
         try (var con = this.dataSource.getConnection();
