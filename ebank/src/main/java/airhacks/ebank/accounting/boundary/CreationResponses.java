@@ -1,11 +1,11 @@
-package airhacks.ebank.accounting.control;
+package airhacks.ebank.accounting.boundary;
 
 import java.net.URI;
 
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
-import airhacks.ebank.http.control.Responses;
+import airhacks.ebank.http.boundary.Responses;
 import jakarta.ws.rs.core.Response;
 
 /// Translates the sealed [airhacks.ebank.accounting.control.AccountCreationResult]

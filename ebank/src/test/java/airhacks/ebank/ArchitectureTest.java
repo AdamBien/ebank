@@ -20,6 +20,28 @@ import jakarta.transaction.Transactional;
 @AnalyzeClasses(packages = "airhacks.ebank", importOptions = ImportOption.DoNotIncludeTests.class)
 class ArchitectureTest {
 
+    /// Protocol-specific technologies that belong exclusively in the boundary
+    /// layer: JAX-RS/REST, the Servlet API, and the MCP server.
+    static final String[] PROTOCOL_PACKAGES = {
+            "jakarta.ws.rs..",
+            "jakarta.servlet..",
+            "io.quarkiverse.mcp.."
+    };
+
+    // --- Protocol isolation (boundary is the only place for REST/HTTP/MCP) ---
+
+    @ArchTest
+    static final ArchRule P1_control_is_free_of_protocol = noClasses()
+            .that().resideInAPackage("..control..")
+            .should().dependOnClassesThat().resideInAnyPackage(PROTOCOL_PACKAGES)
+            .because("control holds protocol-agnostic business logic; REST/HTTP/MCP types belong in the boundary");
+
+    @ArchTest
+    static final ArchRule P2_entities_are_free_of_protocol = noClasses()
+            .that().resideInAPackage("..entity..")
+            .should().dependOnClassesThat().resideInAnyPackage(PROTOCOL_PACKAGES)
+            .because("entities are the domain core; no REST/HTTP/MCP type may leak into them");
+
     // --- BCE layering (application-wide) ---
 
     @ArchTest

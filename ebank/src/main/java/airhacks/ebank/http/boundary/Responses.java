@@ -1,4 +1,4 @@
-package airhacks.ebank.http.control;
+package airhacks.ebank.http.boundary;
 
 import java.net.URI;
 
