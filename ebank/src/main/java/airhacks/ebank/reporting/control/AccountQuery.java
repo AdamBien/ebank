@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 import airhacks.ebank.Control;
 import airhacks.ebank.logging.control.EBLog;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.InternalServerErrorException;
 
 /// Read-only access to `accounting`'s persisted accounts — deliberately via
 /// plain JDBC instead of the entities, so reporting never joins the JPA
@@ -32,8 +31,9 @@ public class AccountQuery {
         """.formatted(tableName());
 
 
-    /// @throws InternalServerErrorException on database failure — the JAX-RS
-    ///                                       runtime maps it to HTTP 500
+    /// @throws AccountQueryException on database failure — a boundary maps it
+    ///                               to its protocol (the JAX-RS runtime yields
+    ///                               HTTP 500)
     public List<String> asIBANs(){
         var ibans = new ArrayList<String>();
         try (var con = this.dataSource.getConnection();
@@ -46,7 +46,7 @@ public class AccountQuery {
         } catch (SQLException e) {
             var error = "Database access error " + e.getMessage();
             this.log.error(error,e);
-            throw new InternalServerErrorException(error);
+            throw new AccountQueryException(error, e);
         }      
         return ibans;
     }
