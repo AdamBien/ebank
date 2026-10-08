@@ -14,7 +14,8 @@ import jakarta.ws.rs.core.Response;
 
 /// Read-only reporting endpoint: renders the IBANs of all accounts as
 /// plain-text CSV and never mutates state. No `@Boundary` stereotype — no
-/// transaction is needed for pure reads.
+/// transaction is needed for pure reads. A failed query surfaces as an
+/// unchecked exception from the control; the JAX-RS runtime maps it to 500.
 @Path("reports")
 @Produces(MediaType.TEXT_PLAIN)
 public class ReportsResource {
