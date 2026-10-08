@@ -10,7 +10,7 @@ import jakarta.persistence.PersistenceContext;
 /// positive and below 1000 (the cap on initial deposits deters fraud, R1.3),
 /// and the IBAN must be unused. Only valid accounts reach the persistence layer.
 @Control
-public class AccountCreator {
+public class AccountOpening {
     @PersistenceContext
     EntityManager em;
 

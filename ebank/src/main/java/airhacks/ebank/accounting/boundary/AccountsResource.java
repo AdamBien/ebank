@@ -12,7 +12,7 @@ import airhacks.ebank.accounting.Requirement;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
-import airhacks.ebank.accounting.control.AccountCreator;
+import airhacks.ebank.accounting.control.AccountOpening;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.control.CreationResponses;
 import airhacks.ebank.accounting.entity.Account;
@@ -29,7 +29,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /// HTTP entry point for the account lifecycle: initial creation and lookup by
-/// IBAN. All decisions are delegated to [AccountCreator] and [AccountFinder];
+/// IBAN. All decisions are delegated to [AccountOpening] and [AccountFinder];
 /// the exhaustive switch over the creation result forces every outcome to be
 /// mapped to an HTTP status.
 @Boundary
@@ -39,7 +39,7 @@ import jakarta.ws.rs.core.Response;
 public class AccountsResource {
 
     @Inject
-    AccountCreator creator;
+    AccountOpening opening;
 
     @Inject
     AccountFinder finder;
@@ -62,7 +62,7 @@ public class AccountsResource {
     @Requirement({R1_1, R1_2, R1_3, R1_4})
     public Response initialCreation(Account account){
         this.log.info("initialCreation " + account);
-        var result = this.creator.initialCreation(account);
+        var result = this.opening.initialCreation(account);
         return switch(result){
             case Created created -> CreationResponses.created(created);
             case AlreadyExists exists -> CreationResponses.alreadyExists(exists);

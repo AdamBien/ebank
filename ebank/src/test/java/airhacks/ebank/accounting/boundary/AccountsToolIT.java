@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import airhacks.ebank.accounting.Requirement;
-import airhacks.ebank.accounting.control.AccountCreator;
+import airhacks.ebank.accounting.control.AccountOpening;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.entity.Account;
 import airhacks.ebank.customers.control.AccountOwnership;
@@ -43,7 +43,7 @@ class AccountsToolIT {
     AccountsTool cut;
 
     @Inject
-    AccountCreator accounts;
+    AccountOpening accounts;
 
     @Inject
     AccountFinder finder;

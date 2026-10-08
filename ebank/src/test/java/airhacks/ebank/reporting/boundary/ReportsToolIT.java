@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import airhacks.ebank.accounting.control.AccountCreator;
+import airhacks.ebank.accounting.control.AccountOpening;
 import airhacks.ebank.accounting.entity.Account;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import io.quarkus.test.junit.QuarkusTest;
@@ -31,14 +31,14 @@ public class ReportsToolIT {
     ReportsTool cut;
 
     @Inject
-    AccountCreator accountCreator;
+    AccountOpening accountOpening;
 
     @Test
     @DisplayName("R1.1: the tool returns the IBANs of all accounts")
     void listAccountIBANs() {
         var iban = UUID.randomUUID().toString();
         QuarkusTransaction.requiringNew()
-                .run(() -> this.accountCreator.initialCreation(new Account(iban, BigDecimal.valueOf(42))));
+                .run(() -> this.accountOpening.initialCreation(new Account(iban, BigDecimal.valueOf(42))));
         var actual = this.cut.listAccountIBANs();
         assertThat(actual)
                 .startsWith("[")
