@@ -122,3 +122,8 @@ This project demonstrates several Java and architectural conventions:
 - **YAGNI**: You Aren't Gonna Need It - no over-engineering
 - **High Cohesion**: Classes with single, well-defined responsibilities
 - **Low Coupling**: Minimal dependencies between components
+
+## References
+
+- [airails.dev](https://airails.dev): SBCE (spec-driven BCE), the workflow used to specify and converge the business components
+- [bce.design](https://bce.design): the Boundary-Control-Entity (BCE/ECB) pattern behind the package structure
