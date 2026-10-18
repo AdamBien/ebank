@@ -127,3 +127,5 @@ This project demonstrates several Java and architectural conventions:
 
 - [airails.dev](https://airails.dev): SBCE (spec-driven BCE), the workflow used to specify and converge the business components
 - [bce.design](https://bce.design): the Boundary-Control-Entity (BCE/ECB) pattern behind the package structure
+- [michal-mm/ebank](https://github.com/michal-mm/ebank): an alternative implementation of the same ebank following Hexagonal Architecture
+- [airhacks.io](https://airhacks.io): Screaming Architecture with BCE, a video course on structuring applications as business components
