@@ -43,6 +43,19 @@ docker pull postgres
 docker run --rm --name ebank-postgres -e POSTGRES_USER=ebank -e POSTGRES_DB=ebankdb -e POSTGRES_PASSWORD=ebanksecret -p 5432:5432 -d postgres
 ```
 
+On macOS 26 with Apple silicon, [Apple's `container` CLI](https://github.com/apple/container) runs the same image without Docker:
+```bash
+./runDB-apple.sh
+```
+
+Or manually:
+```bash
+container system start
+container run --rm --name ebank-postgres -e POSTGRES_USER=ebank -e POSTGRES_DB=ebankdb -e POSTGRES_PASSWORD=ebanksecret -p 5432:5432 -d postgres
+```
+
+The script starts the container runtime, then runs `postgres` with the same credentials and port mapping as above. Quarkus Dev Services still require a Docker-compatible socket, so the datasource stays configured explicitly.
+
 ### Application Start
 ```bash
 cd ebank
